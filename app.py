@@ -34,7 +34,7 @@ def index():
         h_name = userDetails['h_name']
         h_email=userDetails['h_email']
         h_no=userDetails['h_no']
-        payload = "sender_id=FSTSMS&message=Visitor Name:"+v_name+" E-mail:"+v_email+" Mobile No."+v_no+" has arrived to meet you.&language=english&route=p&numbers=7477740333,"+h_no
+        payload = "sender_id=FSTSMS&message=Visitor's Name:"+v_name+"  E-mail:"+v_email+"  Mobile No."+v_no+" has arrived to meet you.&language=english&route=p&numbers=7477740333,"+h_no
         headers = {'authorization': "PHSQpr9C0RE1uT7cKbNxUW8eXLsfmV5wD6J3qh4tjnGiZAY2FMsUJ9ugkyhHeDoIwq4X15vOV87ctR2E", 'Content-Type': "application/x-www-form-urlencoded",'Cache-Control': "no-cache"}
         response = requests.request("POST", url, data=payload, headers=headers)
         # message = """\
@@ -67,13 +67,10 @@ def dep():
         cur = connection.cursor()
         cur.execute("UPDATE users SET status=0 WHERE v_no=(%s) AND status=1",(v_no))
 
-        sql_Query= "select arv from users where v_no =%s"
-        cur.execute(sql_Query, v_no)
-        record = cur.fetchone()
         connection.commit()
         cur.close()
 
-        payload = "sender_id=FSTSMS&message="+record+"&language=english&route=p&numbers=7477740333,"+v_no
+        payload = "sender_id=FSTSMS&message=Checked out&language=english&route=p&numbers=7477740333,"+v_no
         headers = {'authorization': "PHSQpr9C0RE1uT7cKbNxUW8eXLsfmV5wD6J3qh4tjnGiZAY2FMsUJ9ugkyhHeDoIwq4X15vOV87ctR2E", 'Content-Type': "application/x-www-form-urlencoded",'Cache-Control': "no-cache"}
         response = requests.request("POST", url, data=payload, headers=headers)
         print(response.text)
